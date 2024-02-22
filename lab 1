@@ -1,0 +1,152 @@
+1. <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
+</head>
+<body>
+    <script>
+       var randomNumber = Math.ceil(Math.random() * 100);
+       document.write("Випадкове число: " + randomNumber);
+    </script>
+</body>
+</html>
+
+2. В подальших завдання буду втавляти код без HTML розмітки, але вона повинна бути.
+var intNum = 10;
+       var floatNum = 10.6;
+       var boolNum = true;
+       var strNum = "Hi";
+       document.write("Ціле: ", intNum, " Дробове: ", floatNum," Логічне: ", boolNum," Вираз: ", strNum);
+3. var first = 15;
+       var second = 36;
+       var sum = first + second;
+       document.write(sum);
+4. alert("Можлива помилка")
+
+var yourName = promt("Введіть ім'я: ", "");
+if(yourName != null){
+    alert("Hi");
+}
+else{
+    alert("Error");
+}
+
+var age = confirm("Натисніть 1, якщо вам виповнилося 18 років");
+if (age === 1){
+    alert("Ваш вік пітверджено");
+}
+else{
+    alert("Ви ще не достигли потрібного віку");
+}
+5. var age = prompt("Введіть ваш вік");
+document.write("Ваш вік " + age);
+6. var quantity = prompt("Введіть кількість товару: ");
+var price = prompt("Введіть ціну за одну одиницю: ");
+var totalPrice = quantity * price;
+document.write(totalPrice);
+7. var number = prompt("Введіть число: ")
+if(number > 0){
+    document.write("Число додатнє")
+}
+else{
+    document.write("Число від'ємне")
+}
+8. var dayNum = parseInt(prompt("Введіть номер тижня: "));
+var dayName;
+switch(dayNum){
+    case 1:
+        dayName = "Понеділок";
+        break;
+    case 2:
+        dayName = "Вівторок";
+        break;
+    case 3:
+        dayName = "Середа";
+        break;
+    case 4:
+        dayName = "Четвер";
+        break;
+    case 5:
+        dayName = "П'ятниця";
+        break;
+    case 6:
+        dayName = "Субота";
+        break;
+    case 7:
+        dayName = "Неділя";
+        break;    
+}
+document.write(dayName);
+9. <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Таблиця множення числа 6</title>
+</head>
+<body>
+
+<table border="1">
+    <caption>Таблиця множення числа 6</caption>
+    <tr>
+        <th>Число</th>
+        <th>Результат</th>
+    </tr>
+    <script>
+        for (var i = 1; i <= 10; i++) {
+            document.write("<tr>");
+            document.write("<td>" + "6 * " + i + "</td>");
+            document.write("<td>" + (6 * i) + "</td>");
+            document.write("</tr>");
+        }
+    </script>
+</table>
+
+</body>
+</html>
+10. var arr = [2, -4, 7, -8, 3];
+var thirdSqr = arr[2] * arr[2];
+document.write(thirdSqr);
+
+var sumNumber = arr[0] + arr[4];
+document.write(sumNumber);
+
+var sumNeg = 0;
+for(var i = 0; i < arr.length; i++){
+    if(i < 0){
+        sumNeg += arr[i] * arr[i];
+    }
+}
+document.write(sumNeg)
+11. var car = {owner: "Vasil", model: "Toyota", capacity: 1.6}
+var cars=[
+{owner: "Misha", model: "Hundai", capacity: 1.4},
+{owner: "Nikolay", model: "Scoda", capacity: 1.8},
+{owner: "Yuriy", model: "Paugeout", capacity: 1.5},
+{owner: "Sergey", model: "Gilly", capacity: 1.2},
+{owner: "Sasha", model: "Porsche", capacity: 4.4},
+{owner: "Kristina", model: "Honda", capacity: 2.5},
+]
+var minCapacity = cars[0];
+for(var i=1; i < cars.length; i++){
+    if(cars[i].capacity < minCapacity.capacity){
+        minCapacity = cars[i];
+    }
+}
+document.write(minCapacity);
+12. var a = parseFloat(prompt("Введіть перше число:"));
+var b = parseFloat(prompt("Введіть друге число:"));
+var c = parseFloat(prompt("Введіть третє число:"));
+var d = parseFloat(prompt("Введіть четверте число:"));
+var minAB = Math.min(a, b);
+var minCD = Math.min(c,d);
+var result = Math.max(minAB, minCD);
+document.write(result);
+13. var word = "Piece";
+document.write(word.length);
+
+var reverseWord = "";
+for(var i = word.length - 1; i >= 0; i--){
+    reverseWord += word[i];
+}
+document.write(reverseWord);
