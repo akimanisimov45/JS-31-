@@ -1,0 +1,190 @@
+1. let persons = [
+    { name: 'John', age: 23, city: 'Boston' },
+    { name: 'Jane', age: 25, city: 'New York' },
+    { name: 'David', age: 30, city: 'Los Angeles' },
+    { name: 'Emily', age: 28, city: 'Chicago' },
+    { name: 'Michael', age: 35, city: 'Houston' }
+    ];
+persons.groupName = 'A';
+persons.teacher = 'Joan Doe';
+persons.year = '2023';
+document.write("<p>Елементи масиву persons:</p>");
+for (const person of persons) {
+    document.write("<p>" + person.name + ', ' + person.age + ', ' + person.city + "</p>");
+}
+document.write("<p>Властивості масиву persons (for...of):</p>");
+document.write("<p>groupName: " + persons.groupName + "</p>");
+document.write("<p>teacher: " + persons.teacher + "</p>");
+document.write("<p>year: " + persons.year + "</p>");
+
+document.write("<p>Елементи масиву persons (for...in):</p>");
+for (const index in persons) {
+    document.write("<p>" + persons[index].name + ', ' + persons[index].age + ', ' + persons[index].city + "</p>");
+}
+document.write("<p>Властивості масиву persons (for...in):</p>");
+for (const prop in persons) {
+    document.write("<p>" + prop + ': ' + persons[prop] + "</p>");
+}
+
+2. let defaults = { mode: 'test', debugLevel: 'error', logFolder: 'root' };
+      let userSettings = { mode: 'production', debugLevel: 'trace' };
+
+      function mergeSettings(defaults, userSettings) {
+          let mergedSettings = {};
+          for (const key in defaults) {
+              mergedSettings[key] = userSettings[key] !== undefined ? userSettings[key] : defaults[key];
+          }
+          return mergedSettings;
+      }
+
+      let merged = mergeSettings(defaults, userSettings);
+      document.write(merged);
+
+3.let persons = [
+          { name: 'John', age: 23, city: 'Boston' },
+          { name: 'Jane', age: 25, city: 'New York' },
+          { name: 'David', age: 30, city: 'Los Angeles' },
+          { name: 'Emily', age: 28, city: 'Chicago' },
+          { name: 'Michael', age: 35, city: 'Houston' }
+      ];
+      persons.groupName = 'A';
+      persons.teacher = 'Joan Doe';
+      persons.year = '2023';
+
+      persons.forEach(function(person) {
+          Object.defineProperty(person, 'yearOfBirth', {
+              get: function() {
+                  const currentYear = new Date().getFullYear();
+                  return currentYear - this.age;
+              },
+              enumerable: true,
+              configurable: false
+          });
+      });
+      
+      document.write("<p>Рік народження:</p>");
+      persons.forEach(function(person) {
+          document.write("<p>" + person.name + ": " + person.yearOfBirth + "</p>");
+      });
+
+4. let arr1 = [1, 2, 3];
+let arr2 = [4, 5, 6];
+let combinedArray = arr1.concat(arr2);
+console.log(combinedArray); // [1, 2, 3, 4, 5, 6]
+
+let arr1 = [1, 2, 3];
+let arr2 = [4, 5, 6];
+let combinedArray = [...arr1, ...arr2];
+console.log(combinedArray);
+
+5. let persons = [
+          { name: 'John', age: 23, city: 'Boston' },
+          { name: 'Jane', age: 25, city: 'New York' },
+          { name: 'David', age: 30, city: 'Los Angeles' },
+          { name: 'Emily', age: 28, city: 'Chicago' },
+          { name: 'Michael', age: 35, city: 'Houston' }
+      ];
+
+      let textFragments = persons.map(person => `${person.name} from ${person.city} born in ${new Date().getFullYear() - person.age}`);
+      document.write(textFragments);
+
+6.   let persons = [
+    { name: 'John', age: 23, city: 'Boston' },
+    { name: 'Jane', age: 25, city: 'New York' },
+    { name: 'David', age: 30, city: 'Los Angeles' },
+    { name: 'Emily', age: 18, city: 'Chicago' },
+    { name: 'Michael', age: 35, city: 'Houston' }
+];
+
+let personsOver20 = persons.filter(person => person.age > 20);
+document.write(personsOver20);
+
+7. let persons = [
+      { name: 'John', age: 23, city: 'Boston' },
+      { name: 'Jane', age: 25, city: 'New York' },
+      { name: 'David', age: 30, city: 'Los Angeles' },
+      { name: 'Emily', age: 28, city: 'Chicago' },
+      { name: 'Michael', age: 35, city: 'Houston' }
+  ];
+
+  let { name, city } = persons[0];
+  document.write("Деструктуризація об'єкта person:");
+  document.write("Ім'я:", name);
+  document.write("Місто:", city);
+
+  let [firstPerson] = persons;
+  document.write("Деструктуризація першого елемента масиву persons:");
+  document.write("Перший елемент:", firstPerson);
+
+8. let persons = [
+    { name: 'John', age: 23, city: 'Boston' },
+    { name: 'Jane', age: 25, city: 'New York' },
+    { name: 'David', age: 30, city: 'Los Angeles' },
+    { name: 'Emily', age: 28, city: 'Chicago' },
+    { name: 'Michael', age: 35, city: 'Houston' }
+];
+
+function getUserData(userName) {
+    let user = persons.find(person => person.name === userName);
+    if (user) {
+        return user;
+    } else {
+        throw new Error('Unable to find user');
+    }
+}
+
+function showUserInfo(userName) {
+    document.write('Loading<br>');
+    try {
+        let userData = getUserData(userName);
+        document.write('User Info:<br>');
+        document.write(`Name: ${userData.name}, Age: ${userData.age}, City: ${userData.city}<br>`);
+        document.write('Loading finished<br>');
+    } catch (error) {
+        document.write(error.message + '<br>');
+        document.write('Loading finished<br>');
+    }
+}
+
+showUserInfo('John');
+showUserInfo('Alice');
+
+9.  function textToLetters(text) {
+    return text.split('');
+}
+
+let text = "Hello, world!";
+let letters = textToLetters(text);
+document.write(letters);
+
+10. function reverseWord(word) {
+    return word.split('').reverse().join('');
+}
+
+let word = "Hello";
+let reversed = reverseWord(word);
+document.write(reversed); 
+
+11. function isJSFile(fileName) {
+      return fileName.endsWith('.js');
+  }
+
+  document.write(isJSFile('script.js'));
+  document.write(isJSFile('index.html'));
+  document.write(isJSFile('styles.css'));
+
+12. function sentenceToWords(sentence) {
+    return sentence.split(/\s+/);
+}
+
+let sentence = "Це є приклад речення для перетворення на масив слів";
+let words = sentenceToWords(sentence);
+document.write(words);
+
+13. function replaceWord(text, targetWord, replacement) {
+      return text.replace(new RegExp(targetWord, 'g'), replacement);
+  }
+
+  let text = "Це є текстовий фрагмент з деяким словом, яке потрібно замінити.";
+  let newText = replaceWord(text, 'словом', 'фразою');
+  document.write(newText);
