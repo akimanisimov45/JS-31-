@@ -1,0 +1,159 @@
+1.  function average(...args) {
+        const sum = args.reduce((acc, val) => acc + val, 0);
+        return sum / args.length;
+    }
+    document.write("Середнє значення: " + average(1, 2, 3, 4, 5));
+
+2. function values(f, low, high){
+       const result = [];
+       for(let i = low; i <= high; i++){
+           result.push(f(i));
+       }
+       return result;
+   }
+   const square = x => x * x;
+   const squares = values(square, 1, 7);
+   document.write("Масив квадратів: " + squares);
+
+   3. function callWithContext(object, callback) {
+        callback.call(object);
+    }
+
+    const person = {
+        name: "John",
+        age: 30
+    };
+
+    function birthdayMessage() {
+        const date = new Date().toLocaleDateString();
+        document.write(`Today is ${date}! Happy birthday ${this.name}.`);
+    }
+
+    callWithContext(person, birthdayMessage);
+
+    4.   function createCounter() {
+        let value = 0;
+
+        return {
+            increment: function() {
+                value++;
+            },
+            getValue: function() {
+                return value;
+            }
+        };
+    }
+
+    const counter = createCounter();
+
+    counter.increment();
+    counter.increment();
+    counter.increment();
+    document.write("Поточне значення: " + counter.getValue());
+
+    5. function getGreeting(name) {
+        if (getGreeting.lastCall && getGreeting.lastCall.name === name) {
+            return getGreeting.lastCall.result;
+        } else {
+            const greeting = `Hello ${name}`;
+            getGreeting.lastCall = { name, result: greeting };
+            return greeting;
+        }
+    }
+
+    document.write(getGreeting("John\n"));
+    document.write(getGreeting("Garry\n"));
+    document.write(getGreeting("John"));
+
+    6. function createAdder(x) {
+        return function(y) {
+            return x + y;
+        };
+    }
+
+    const addFive = createAdder(5);
+    const addFifteen = createAdder(15);
+
+    document.write(addFive(3));
+    document.write(addFifteen(3));
+
+    7.  function createTextChecker(textArray) {
+        return function(text) {
+            return textArray.includes(text);
+        };
+    }
+
+    const fruits = ["melon", "banana", "strawberry", "grape"];
+    const checkForFruit = createTextChecker(fruits);
+
+    document.write(checkForFruit("grape"));
+    document.write(checkForFruit("melon"));
+    document.write(checkForFruit("pear"));
+
+    8. const capitalizeProperty = (array, property) => {
+        return array.map(item => {
+            return {
+                ...item,
+                [property]: item[property].charAt(0).toUpperCase() + item[property].slice(1)
+            };
+        });
+    };
+
+    // Приклад використання:
+    const people = [
+        { name: "garry", age: 30 },
+        { name: "frank", age: 25 },
+        { name: "bob", age: 35 }
+    ];
+
+    const capitalizedPeople = capitalizeProperty(people, "name");
+    document.write(capitalizedPeople);
+
+    9. const calculator = {
+        calculate: function(a, b) {
+            return a + b;
+        }
+    };
+
+    document.write(calculator.calculate.call(null, 3, 4));
+
+    document.write(calculator.calculate.apply(null, [3, 4]));
+
+    const boundCalculator = calculator.calculate.bind(null, 3, 4);
+    document.write(boundCalculator());
+
+    10. function callbackLogger(callback, ...args) {
+        const functionName = callback.name || "anonymous function";
+        const currentTime = new Date().toLocaleTimeString();
+        console.log(`Function: ${functionName}, Arguments: [${args}], Time: ${currentTime}`);
+        callback(...args);
+    }
+
+    function add(a, b) {
+        document.write(a + b);
+    }
+
+    callbackLogger(add, 6, 8);
+
+    11. function cachedFunction(func) {
+        let lastResult;
+        let lastCallTime;
+
+        return function(...args) {
+            const currentTime = Date.now();
+            if (!lastCallTime || currentTime - lastCallTime > 10000) {
+                lastResult = func(...args);
+                lastCallTime = currentTime;
+            }
+            return lastResult;
+        };
+    }
+
+    const cachedAdd = cachedFunction((a, b) => {
+        document.write("Adding...");
+        return a + b;
+    });
+
+    document.write(cachedAdd(3, 4));
+    document.write(cachedAdd(5, 6));
+    document.write(cachedAdd(3, 4));
