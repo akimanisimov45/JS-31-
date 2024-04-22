@@ -1,0 +1,277 @@
+1. function Car(brand, model, year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+    }
+
+    const car1 = new Car("Porsche", "Panamera", 2014);
+    document.write(car1);
+
+class Car{
+        constructor(brand, model, year) {
+            this.brand = brand;
+            this.model = model;
+            this.year = year;
+        }
+    }
+
+    const car2 = new Car("Porsche", "Panamera", 2012);
+    document.write(car2);
+
+2. class Car{
+        constructor(brand, model, year) {
+            this.brand = brand;
+            this.model = model;
+            this.year = year;
+        }
+    }
+
+    const carPrototype = {
+        drive(){
+            document.write("Це ${this.brand} ${this.model} їде.");
+        }
+    };
+
+    const car1 = Object.create(carPrototype);
+    car1.brand = "Honda";
+    car1.model = "Accord";
+    car1.year = 2019;
+
+    const car2 = Object.create(carPrototype);
+    car2.brand = "BMW";
+    car2.model = "M8";
+    car2.year = 2022;
+
+    document.write(car1);
+    document.write(car2);
+
+    car1.drive();
+    car2.drive();
+
+3. function Person(firstName, lastName, birthYear) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthYear = birthYear;
+    }
+
+    Person.prototype.calculateAge = function() {
+        const currentYear = new Date().getFullYear();
+        return currentYear - this.birthYear;
+    };
+
+    Person.prototype.fullName = function() {
+        return this.firstName + " " + this.lastName;
+    };
+
+    const person1 = new Person("Mike", "Lingyt", 1975);
+
+    document.write(person1.calculateAge());
+    document.write(person1.fullName());
+
+4. function Person(firstName, lastName, birthYear) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthYear = birthYear;
+    }
+
+    Person.prototype.calculateAge = function() {
+        const currentYear = new Date().getFullYear();
+        return currentYear - this.birthYear;
+    };
+
+    Person.prototype.fullName = function() {
+        return this.firstName + " " + this.lastName;
+    };
+    function Employee(firstName, lastName, birthYear, position) {
+        Person.call(this, firstName, lastName, birthYear);
+        this.position = position;
+    }
+
+    Employee.prototype = Object.create(Person.prototype);
+    Employee.prototype.constructor = Employee;
+
+    Employee.prototype.fullName = function() {
+        return this.firstName + " " + this.lastName + ", " + this.position;
+    };
+
+    const employee1 = new Employee("Mike", "Lingyt", 1975, "Programmer");
+
+    document.write(employee1.fullName());
+
+5. function checkObjectClass(obj1, obj2) {
+        const className1 = obj1.constructor.name;
+        const className2 = obj2.constructor.name;
+
+        if (className1 === className2) {
+            document.write(`Два об'єкти належать до одного класу: ${className1}\n`);
+        } else {
+            document.write(`Два об'єкти належать до різних класів: ${className1}, ${className2}`);
+        }
+    }
+
+    class Person {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+
+    class Employee {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+
+    const person1 = new Person("Harry");
+    const person2 = new Person("Charlie");
+    const employee = new Employee("Klark");
+
+    checkObjectClass(person1, person2);
+    checkObjectClass(person1, employee);
+
+6. class ObservedPerson {
+        constructor(person) {
+            this.person = person;
+            this.methodCalls = {};
+        }
+
+        getCallCount(methodName) {
+            return this.methodCalls[methodName] || 0;
+        }
+
+        logCallCount(methodName) {
+            document.write(`Метод ${methodName} визивається ${this.getCallCount(methodName)} рази.`);
+        }
+
+        observe() {
+            const observedPerson = this;
+
+            Object.getOwnPropertyNames(Object.getPrototypeOf(this.person)).forEach(methodName => {
+                if (methodName !== "constructor" && typeof this.person[methodName] === "function") {
+                    observedPerson[methodName] = function(...args) {
+                        observedPerson.methodCalls[methodName] = (observedPerson.methodCalls[methodName] || 0) + 1;
+                        return this.person[methodName].apply(this.person, args);
+                    };
+                }
+            });
+        }
+    }
+
+    class Person {
+        constructor(name) {
+            this.name = name;
+        }
+
+        greet() {
+            console.log(`Моє ім'я ${this.name}.`);
+        }
+    }
+
+    const person = new Person("Alice");
+    const observedPerson = new ObservedPerson(person);
+    observedPerson.observe();
+
+    observedPerson.greet();
+    observedPerson.greet();
+    observedPerson.logCallCount("greet");
+
+7. class Shape {
+        calculateArea() {
+            throw new Error("Реалізовуємо метод 'calculateArea'.");
+        }
+
+        calculatePerimeter() {
+            throw new Error("Метод 'calculatePerimeter' має бути доданий.");
+        }
+    }
+
+    class Rectangle extends Shape {
+        constructor(width, height) {
+            super();
+            this.width = width;
+            this.height = height;
+        }
+
+        calculateArea() {
+            return this.width * this.height;
+        }
+
+        calculatePerimeter() {
+            return 2 * (this.width + this.height);
+        }
+    }
+
+    class Circle extends Shape {
+        constructor(radius) {
+            super();
+            this.radius = radius;
+        }
+
+        calculateArea() {
+            return Math.PI * this.radius ** 2;
+        }
+
+        calculatePerimeter() {
+            return 2 * Math.PI * this.radius;
+        }
+    }
+
+    const rectangle = new Rectangle(5, 3);
+    document.write("Площа прямокутника: ", rectangle.calculateArea(), "\n");
+    document.write("Периметр прямокутника: ", rectangle.calculatePerimeter(), "\n");
+
+    const circle = new Circle(4);
+    document.write("Площа круга: ", circle.calculateArea(), "\n");
+    document.write("Периметр круга: ", circle.calculatePerimeter());
+
+8. class Shape {
+        calculateArea() {
+            throw new Error("Method 'calculateArea' must be implemented.");
+        }
+
+        calculatePerimeter() {
+            throw new Error("Method 'calculatePerimeter' must be implemented.");
+        }
+    }
+
+    class Rectangle extends Shape {
+        constructor(width, height) {
+            super();
+            this.width = width;
+            this.height = height;
+        }
+
+        calculateArea() {
+            return this.width * this.height;
+        }
+
+        calculatePerimeter() {
+            return 2 * (this.width + this.height);
+        }
+    }
+
+    class Circle extends Shape {
+        constructor(radius) {
+            super();
+            this.radius = radius;
+        }
+
+        calculateArea() {
+            return Math.PI * this.radius ** 2;
+        }
+
+        calculatePerimeter() {
+            return 2 * Math.PI * this.radius;
+        }
+    }
+
+    const shapes = [
+        new Rectangle(5, 3),
+        new Circle(4)
+    ];
+
+    shapes.forEach(shape => {
+        document.write("Фігура: ", shape.constructor.name, "\n");
+        document.write("Площа: ", shape.calculateArea(), "\n");
+        document.write("Периметр: ", shape.calculatePerimeter(), "\n");
+        document.write(" --- ");
+    });
