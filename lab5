@@ -1,0 +1,201 @@
+1.  function invokeAfterDelay(delay) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const randomNumber = Math.floor(Math.random() * 11);
+                resolve(randomNumber);
+            }, delay);
+        });
+    }
+
+    invokeAfterDelay(3000)
+        .then(randomNumber => {
+            document.write("Випадкове число:", randomNumber);
+        })
+        .catch(error => {
+            document.write("Сталася помилка:", error);
+        });
+
+2. function invokeAfterDelay(delay) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const randomNumber = Math.floor(Math.random() * 11);
+                resolve(randomNumber);
+            }, delay);
+        });
+    }
+    function produceRandomAfterDelay() {
+        return Promise.all([invokeAfterDelay(2000), invokeAfterDelay(3000)])
+            .then(results => {
+                const sum = results.reduce((acc, curr) => acc + curr, 0);
+                return sum;
+            });
+    }
+
+    produceRandomAfterDelay()
+        .then(sum => {
+            document.write("Сума результатів:", sum);
+        })
+        .catch(error => {
+            document.write("Сталася помилка:", error);
+        });
+
+3. function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    async function example() {
+        document.write("Початок виконання");
+        await sleep(3000);
+        document.write("Затримка завершена");
+    }
+    example();
+
+4. function getUser(id) {
+        const users = [
+            { id: 0, name: 'Koni', age: 33, city: 'New York' },
+            { id: 1, name: 'Alan', age: 25, city: 'Los Angeles' },
+            { id: 2, name: 'Bob', age: 55, city: 'Chicago' },
+            { id: 3, name: 'Sarra', age: 27, city: 'San Francisco' }
+        ];
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const user = users.find(user => user.id === id);
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject('User not found');
+                }
+            }, 1000);
+        });
+    }
+
+    getUser(2)
+        .then(user => {
+            document.write("Користувач знайдений:", user);
+        })
+        .catch(error => {
+            document.write("Помилка:", error);
+        });
+
+5. function getUser(id) {
+        const users = [
+            { id: 0, name: 'Koni', age: 33, city: 'New York' },
+            { id: 1, name: 'Alan', age: 25, city: 'Los Angeles' },
+            { id: 2, name: 'Bob', age: 55, city: 'Chicago' },
+            { id: 3, name: 'Sarra', age: 27, city: 'San Francisco' }
+        ];
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const user = users.find(user => user.id === id);
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject('User not found');
+                }
+            }, 1000);
+        });
+    }
+
+    function loadUsers(ids) {
+        const promises = ids.map(id => getUser(id));
+
+        return Promise.allSettled(promises)
+            .then(results => {
+                const users = results
+                    .filter(result => result.status === 'fulfilled')
+                    .map(result => result.value);
+
+                const errors = results
+                    .filter(result => result.status === 'rejected')
+                    .map(result => result.reason);
+
+                if (errors.length > 0) {
+                    document.write("Помилки під час завантаження користувачів:", errors);
+                }
+
+                return users;
+            });
+    }
+
+    loadUsers([0, 1, 2, 3])
+        .then(users => {
+            document.write("Користувачі:", users);
+        });
+
+6. function logCall(callback) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const currentTime = new Date().toLocaleTimeString();
+                document.write("Поточний час:", currentTime);
+                try {
+                    resolve(callback());
+                } catch (error) {
+                    reject(error);
+                }
+            }, 1000);
+        });
+    }
+
+    logCall(() => {
+        return "Виклик функції успішний!";
+    })
+        .then(result => {
+            document.write("Результат виклику функції:", result);
+        })
+        .catch(error => {
+            document.write("Сталася помилка:", error);
+        });
+
+7. function getUser(id) {
+        const users = [
+            { id: 0, name: 'Koni', age: 33, city: 'New York' },
+            { id: 1, name: 'Alan', age: 25, city: 'Los Angeles' },
+            { id: 2, name: 'Bob', age: 55, city: 'Chicago' },
+            { id: 3, name: 'Sarra', age: 27, city: 'San Francisco' }
+        ];
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const user = users.find(user => user.id === id);
+                if (user) {
+                    resolve(user);
+                } else {
+                    reject('User not found');
+                }
+            }, 1000);
+        });
+    }
+    function loadUsers(ids) {
+        const promises = ids.map(id => getUser(id));
+
+        return Promise.allSettled(promises)
+            .then(results => {
+                const users = results
+                    .filter(result => result.status === 'fulfilled')
+                    .map(result => result.value);
+
+                const errors = results
+                    .filter(result => result.status === 'rejected')
+                    .map(result => result.reason);
+
+                if (errors.length > 0) {
+                    document.write("Помилки під час завантаження користувачів:", errors);
+                }
+
+                return users;
+            });
+    }
+    async function showUsers(ids) {
+        document.write("Loading...");
+        try {
+            const users = await loadUsers(ids);
+            document.write("Loaded users:", users);
+        } catch (error) {
+            document.write("Error loading users:", error);
+        } finally {
+            document.write("Loading finished.");
+        }
+    }
+
+    showUsers([0, 1, 2, 3]);
